@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import React, { Suspense, lazy } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { OnboardingProvider } from './hooks/useOnboardingStore';
 import { AuthProvider } from './contexts/AuthContext';
 import ParticleGrid from './components/ParticleGrid';
@@ -93,6 +94,7 @@ export default function App() {
         <OnboardingProvider>
           <ParticleGrid />
           <AnimatedRoutes />
+          <SpeedInsights />
         </OnboardingProvider>
       </AuthProvider>
     </BrowserRouter>
