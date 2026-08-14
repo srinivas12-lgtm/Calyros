@@ -1,433 +1,77 @@
-# 🧠 Calyros AI
+# Calyros
 
-### Transforming Food Labels into Personalized Health Intelligence
+Calyros is a web application designed to provide a robust and scalable solution for managing various tasks. This README file outlines the setup instructions, usage, and other relevant information for developers and users.
 
-Calyros AI is an AI-powered nutrition intelligence platform that helps users understand food products by analyzing nutrition labels, ingredients, allergens, additives, and nutritional value using OCR and Large Language Models.
+## Table of Contents
 
-Instead of forcing users to manually interpret complex nutrition labels, Calyros AI converts food packaging into actionable health insights and personalized recommendations.
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Docker](#docker)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
+- [License](#license)
 
----
+## Features
 
-## 🚀 Problem Statement
+- RESTful API for task management
+- Modular architecture with controllers, services, and models
+- Dockerized for easy deployment
+- Configurable environment settings
 
-Millions of consumers purchase packaged food every day but struggle to understand:
+## Technologies Used
 
-* Complex nutrition labels
-* Hidden sugars
-* Artificial additives
-* Preservatives
-* Allergens
-* Marketing claims
-* Product suitability for personal health goals
+- Node.js
+- Express.js
+- MongoDB (or any other database as per your implementation)
+- Docker
 
-Most users end up asking:
+## Installation
 
-> "Can I eat this product?"
+1. Clone the repository:
+   ```
+   git clone https://github.com/srinivas12-lgtm/Calyros.git
+   cd Calyros
+   ```
 
-Traditional nutrition labels provide information but not understanding.
+2. Install dependencies:
+   ```
+   npm install
+   ```
 
----
+3. Create a `.env` file based on the `.env.example` file and fill in the required environment variables.
 
-## 💡 Solution
+## Usage
 
-Calyros AI acts as an intelligent nutrition assistant.
-
-Users simply upload a food label image, and the platform:
-
-1. Extracts text using OCR
-2. Uses AI to identify nutrition facts and ingredients
-3. Detects allergens and additives
-4. Generates a health score
-5. Provides personalized nutritional insights
-6. Allows users to ask follow-up questions through an AI nutrition chatbot
-
----
-
-# ✨ Features
-
-## 📷 Smart Nutrition Label Scanner
-
-Upload a nutrition label image and instantly receive:
-
-* Product identification
-* Ingredient analysis
-* Nutrition facts extraction
-* Allergen detection
-* Additive detection
-
----
-
-## 🤖 AI-Powered Nutrition Intelligence
-
-The platform intelligently identifies:
-
-### Nutrients
-
-* Protein
-* Fiber
-* Sugar
-* Carbohydrates
-* Fat
-* Sodium
-
-### Vitamins & Minerals
-
-* Vitamin A
-* Vitamin B Complex
-* Vitamin C
-* Vitamin D
-* Calcium
-* Iron
-* Zinc
-* Magnesium
-* Potassium
-
-### Other Important Components
-
-* Amino acids
-* Electrolytes
-* Omega fatty acids
-* Preservatives
-* Artificial sweeteners
-* Food additives
-
----
-
-## 📊 Personalized Health Scoring
-
-Every scanned product receives:
-
-* Health Score (0–100)
-* Product Classification
-* Nutritional Assessment
-* Personalized Recommendations
-
-Example:
-
-```text
-Health Score: 78/100
-
-Classification:
-Good
-
-Summary:
-Moderate sugar content but high protein and useful micronutrients.
+To start the application, run:
 ```
-
----
-
-## ⚠️ Allergy-Aware Analysis
-
-Calyros AI distinguishes between:
-
-### Product Allergens
-
-Ingredients present in the food:
-
-* Milk
-* Soy
-* Wheat
-* Eggs
-* Peanuts
-
-### User Allergy Conflicts
-
-The system only triggers warnings when:
-
-```text
-Product Allergen ∩ User Allergy Profile ≠ ∅
+npm start
 ```
+The server will start on the specified port (default is 3000).
 
-Example:
+## Docker
 
-```text
-🚨 Allergy Alert
+To build and run the application using Docker, follow these steps:
 
-This product contains Milk,
-which matches your allergy profile.
-```
+1. Build the Docker image:
+   ```
+   docker build -t calyros .
+   ```
 
----
+2. Run the Docker container:
+   ```
+   docker run -p 3000:3000 calyros
+   ```
 
-## 💬 Nutra AI Chat Assistant
+## Deployment
 
-After scanning a product, users can ask:
+For deployment on Render, ensure you have a `render.yaml` file configured with the necessary settings. Follow the instructions on the Render platform to deploy your application.
 
-* Can I eat this daily?
-* Is this suitable for weight loss?
-* Is this good for muscle gain?
-* Are there healthier alternatives?
-* Does this contain harmful ingredients?
+## Contributing
 
-The chatbot uses:
+Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
 
-* User Profile
-* Health Goals
-* Dietary Preferences
-* Scan Results
-* Nutrition Data
+## License
 
-to generate personalized responses.
-
----
-
-# 🏗 System Architecture
-
-## Scan Pipeline
-
-```text
-User Uploads Image
-        │
-        ▼
-     EasyOCR
-(Text Extraction)
-        │
-        ▼
-Llama 4 Scout
-(Structured Extraction)
-        │
-        ▼
-Nutrition Parser
-(Data Validation)
-        │
-        ▼
-Nutrition Intelligence Engine
-(Scoring & Analysis)
-        │
-        ▼
-PostgreSQL Database
-        │
-        ▼
-Frontend Dashboard
-```
-
----
-
-## Chat Pipeline
-
-```text
-User Question
-        │
-        ▼
-Context Builder
-        │
-        ▼
-User Profile
-+
-Scan Results
-+
-Health Score
-        │
-        ▼
-GPT-OSS-120B
-        │
-        ▼
-Personalized Response
-```
-
----
-
-# 🛠 Tech Stack
-
-## Frontend
-
-* React
-* Vite
-* React Router
-* React Query
-* Tailwind CSS
-
-## Backend
-
-* FastAPI
-* SQLAlchemy
-* Pydantic
-* Alembic
-
-## AI Layer
-
-* EasyOCR
-* Groq API
-* Llama 4 Scout
-* GPT-OSS-120B
-
-## Database
-
-* PostgreSQL (Neon)
-
-## Storage
-
-* Supabase Storage
-
-## Authentication
-
-* JWT Authentication
-* OAuth2 Password Flow
-
----
-
-# 📂 Project Structure
-
-```text
-calyros-ai/
-│
-├── frontend/
-│   ├── src/
-│   ├── pages/
-│   ├── components/
-│   ├── hooks/
-│   └── services/
-│
-├── backend/
-│   ├── app/
-│   │   ├── api/
-│   │   ├── services/
-│   │   ├── models/
-│   │   ├── schemas/
-│   │   ├── core/
-│   │   └── database/
-│   │
-│   └── alembic/
-│
-└── README.md
-```
-
----
-
-# ⚙️ Installation
-
-## Clone Repository
-
-```bash
-git clone https://github.com/your-username/calyros-ai.git
-
-cd calyros-ai
-```
-
----
-
-## Backend Setup
-
-```bash
-cd backend
-
-python -m venv venv
-
-venv\Scripts\activate
-
-pip install -r requirements.txt
-```
-
-Create `.env`
-
-```env
-DATABASE_URL=
-
-SECRET_KEY=
-
-REFRESH_SECRET_KEY=
-
-GROQ_API_KEY_SCOUT=
-
-GROQ_API_KEY_CHAT=
-
-SUPABASE_URL=
-
-SUPABASE_KEY=
-```
-
-Run migrations:
-
-```bash
-alembic upgrade head
-```
-
-Start backend:
-
-```bash
-uvicorn app.main:app --reload
-```
-
----
-
-## Frontend Setup
-
-```bash
-npm install
-
-npm run dev
-```
-
----
-
-# 📈 Future Roadmap
-
-### Phase 1
-
-* Nutrition Label Scanning
-* Personalized Analysis
-* AI Chat Assistant
-
-### Phase 2
-
-* Barcode Scanner
-* Mobile Application
-* Multi-language Support
-
-### Phase 3
-
-* Meal Tracking
-* Grocery Recommendations
-* Diet Planning
-* Voice Assistant
-
-### Phase 4
-
-* Wearable Integration
-* Health Monitoring
-* Predictive Nutrition Intelligence
-
----
-
-# 🎯 Impact
-
-## For Consumers
-
-* Better food choices
-* Increased nutrition awareness
-* Personalized guidance
-
-## For Healthcare
-
-* Preventive health support
-* Improved dietary habits
-* Data-driven nutrition decisions
-
----
-
-# 🌍 Vision
-
-> To become the world's most intelligent AI-powered nutrition companion, helping people make healthier food decisions through personalized nutrition intelligence.
-
----
-
-# 📄 License
-
-This project is licensed under the MIT License.
-
----
-
-# 👥 Contributors
-
-Contributions, issues, and feature requests are welcome.
-
-If you would like to contribute:
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Open a Pull Request
-
----
-
-### Built with ❤️ using AI, FastAPI, React, OCR, and Large Language Models.
+This project is licensed under the MIT License. See the LICENSE file for details.

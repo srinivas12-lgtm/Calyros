@@ -1,0 +1,12 @@
+build:
+  type: node
+  command: npm install && npm run build
+  env:
+    NODE_ENV: production
+
+start:
+  command: npm start
+
+env:
+  NODE_ENV: production
+  DATABASE_URL: ${DATABASE_URL}
