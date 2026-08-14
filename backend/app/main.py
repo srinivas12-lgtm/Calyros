@@ -33,19 +33,38 @@ if settings.SENTRY_DSN:
         profiles_sample_rate=1.0,
     )
 
+import time
+from app.models import Base
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup actions
     logger.info("✓ Configuration Loaded")
     
-    # Verify Database Connection
-    try:
-        with engine.connect() as connection:
-            connection.execute(text("SELECT 1"))
-            logger.info("✓ Database Connected")
-    except Exception as e:
-        logger.error(f"Database connection failed on startup: {e}")
-        raise e
+    # Verify Database Connection with retry loop
+    db_connected = False
+    max_retries = 5
+    for attempt in range(1, max_retries + 1):
+        try:
+            with engine.connect() as connection:
+                connection.execute(text("SELECT 1"))
+                logger.info("✓ Database Connected successfully")
+                db_connected = True
+                
+                # Ensure tables exist
+                try:
+                    Base.metadata.create_all(bind=engine)
+                    logger.info("✓ Database tables verified/initialized")
+                except Exception as table_err:
+                    logger.warning(f"Note on table creation: {table_err}")
+                break
+        except Exception as e:
+            if attempt < max_retries:
+                logger.warning(f"Database connection attempt {attempt}/{max_retries} failed ({e}). Retrying in 2s...")
+                time.sleep(2)
+            else:
+                logger.error(f"Database connection failed after {max_retries} attempts: {e}")
+                raise e
         
     # Log Pipeline Configuration
     logger.info("✓ AI Pipeline Enabled")
@@ -53,14 +72,18 @@ async def lifespan(app: FastAPI):
     logger.info(f"  - Stage 2: Reasoning Model Loaded ({settings.GROQ_REASONING_MODEL})")
         
     # Connect to Redis
-    await redis_client.connect()
+    try:
+        await redis_client.connect()
+    except Exception as redis_err:
+        logger.warning(f"Redis connection warning: {redis_err}")
 
-    logger.info("✓ API Started")
+    logger.info("✓ API Started successfully")
     yield
     
     # Shutdown actions
     await redis_client.disconnect()
     logger.info("API shutdown complete")
+
 
 app = FastAPI(
     title=settings.APP_NAME,
